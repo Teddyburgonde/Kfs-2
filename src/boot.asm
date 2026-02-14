@@ -22,7 +22,7 @@ extern main
 
 _start:
 	mov esp, stack_top
-
+	call flush_gdt
 	call main
 
 	cli
@@ -46,16 +46,19 @@ gdt:
 	dq 0x00CF92000000FFFF
 
 .user_code:
-	
+	dq 0x00CFFA000000FFFF
+
 .user_data:
+	dq 0x00CFF2000000FFFF
 
 .user_stack: 
+	dq 0x00CFF2000000FFFF
 
 gdt_end:
 
-
-
-
+gdtr:
+	dw gdt_end - gdt - 1 ; (limite size GDT at -1)
+	dd gdt ; address gdt
 
 flush_gdt:
     lgdt [gdtr]
