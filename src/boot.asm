@@ -30,3 +30,40 @@ _start:
 .hang:
 	jmp .hang
 .end:
+
+gdt:
+.null_descriptor:
+	dq 0x0
+
+; 8 bytes
+.kernel_code:
+	dq 0x00cf9a000000ffff
+
+.kernel_data:
+	
+.kernel_stack:
+
+.user_code:
+
+.user_data:
+
+.user_stack: 
+
+gdt_end:
+
+
+
+
+
+flush_gdt:
+    lgdt [gdtr]
+    jmp 0x08:complete_flush
+ 
+complete_flush:
+    mov ax, 0x10
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+    ret
