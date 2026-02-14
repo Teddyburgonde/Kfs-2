@@ -40,8 +40,10 @@ gdt:
 	dq 0x00cf9a000000ffff
 
 .kernel_data:
-	
+	dq 0x00cf92A000000ffff 
+
 .kernel_stack:
+	
 
 .user_code:
 
