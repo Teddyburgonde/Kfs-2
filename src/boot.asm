@@ -37,16 +37,16 @@ gdt:
 
 ; 8 bytes
 .kernel_code:
-	dq 0x00cf9a000000ffff
+	dq 0x00CF9A000000FFFF
 
 .kernel_data:
-	dq 0x00cf92A000000ffff 
+	dq 0x00CF92000000FFFF  
 
 .kernel_stack:
-	
+	dq 0x00CF92000000FFFF
 
 .user_code:
-
+	
 .user_data:
 
 .user_stack: 
