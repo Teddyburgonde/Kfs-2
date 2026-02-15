@@ -36,12 +36,12 @@ gdt:
 .null_descriptor:
 	dq 0x0
 
-; 8 bytes
+; 8 bytes Segment descriptors
 .kernel_code:
 	dq 0x00CF9A000000FFFF
 
 .kernel_data:
-	dq 0x00CF92000000FFFF  
+	dq 0x00CF92000000FFFF
 
 .kernel_stack:
 	dq 0x00CF92000000FFFF
@@ -52,7 +52,7 @@ gdt:
 .user_data:
 	dq 0x00CFF2000000FFFF
 
-.user_stack: 
+.user_stack:
 	dq 0x00CFF2000000FFFF
 
 gdt_end:
@@ -64,7 +64,7 @@ gdtr:
 flush_gdt:
     lgdt [gdtr]
     jmp 0x08:complete_flush
- 
+
 complete_flush:
     mov ax, 0x10
     mov ds, ax
