@@ -104,6 +104,11 @@ static void	ft_f2()
 }
 
 
+static void ft_f3()
+{
+    outw(0x604, 0x2000);
+}
+
 
 int	pressed = 0;
 
@@ -175,6 +180,11 @@ void keyboard_handler()
 		else if (scancode == 0x3C && pressed == 0)
 		{
     		ft_f2();
+    		pressed = 1;
+		}
+		else if (scancode == 0x3D && pressed == 0)
+		{
+    		ft_f3();
     		pressed = 1;
 		}
 		else if (character != '\0' && pressed == 0)
