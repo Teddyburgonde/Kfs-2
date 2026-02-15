@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: tebandam <tebandam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:03:04 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/13 18:14:41 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/15 07:55:11 by tebandam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "kernel.h"
 #include "ft_io.h"
 #include "ft_keyboard.h"
+#include "gdt.h"
 
-# define KFS_VERSION "kfs-1"
+# define KFS_VERSION "kfs-2"
 # define KFS_CREDITS "(by tebandam & mbatty)"
 
 # define KFS_HEADER "\
@@ -58,6 +59,7 @@ void	main(void)
 	terminal_clear(screen_2);
 
 	print_header_and_colors();
+	print_stack();
 
 	terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
 	ft_printf("%s", SHELL_PROMPT);
