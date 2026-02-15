@@ -10,30 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf"
-# include "terminal.h"
+#include "ft_io.h"
+#include "ft_terminal.h"
 
-/*
-
-### Exercice 1
-Écris le code pour récupérer la valeur de ESP dans une variable.
-
-### Exercice 2
-Affiche cette valeur avec `ft_printf` (format hexadécimal `%x`).
-
-### Exercice 3
-Lis et affiche les 4 premières valeurs sur la stack.
-
-move source, destination
-
+/* 
+The GDTR register contains two pieces of information:
+limit -> Size of the GDT - 1
+base -> Starting address of the GDT in memory
 */
+void print_gdt_address(void)
+{
+    unsigned char gdtr[6];
+    
+    asm("sgdt %0" : "=m"(gdtr));
+    
+    unsigned int base = *(unsigned int *)(gdtr + 2);
+    ft_printf("GDT base: 0x%x\n", base);
+}
 
 void print_stack(void)
 {
-	int esp; 
+	unsigned int *esp;
 	
-	esp = 0;
-	// copy l'adresse du sommet de la stack et met la dans esp.
-    asm("mov %0, %%esp": "=r"(esp));
-    ft_printf("ESP = 0x%x\n", esp);
+	 // Copy the address of the top of the stack into esp.
+    asm("mov %%esp, %0": "=r"(esp));
+
+	for (int i = 0; i < 4; ++i) {
+		ft_printf("0x%x\n", (esp[i]));
+	}
 }

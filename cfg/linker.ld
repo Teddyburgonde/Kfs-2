@@ -3,15 +3,6 @@ ENTRY(_start)
 
 SECTIONS {
 
-	/* Set GDT at address 0x00000800 */
-	. = 0x00000800;
-	.gdt 
-	{
-		*(.gdt)
-	}
-
-
-
 	/* The start address 
 	The code that the user will type will be stored at this address. */
 	. = 2M; 
@@ -47,6 +38,12 @@ SECTIONS {
 
 		/* global variables */
 		*(.bss)
+	}
+
+	/* Set GDT at address 0x00000800 */
+	.gdt 0x00000800 :
+	{
+		*(.gdt)
 	}
 
 }

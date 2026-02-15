@@ -31,6 +31,7 @@ _start:
 	jmp .hang
 .end:
 
+section .gdt
 gdt:
 .null_descriptor:
 	dq 0x0
