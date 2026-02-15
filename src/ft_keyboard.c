@@ -27,6 +27,7 @@ extern int			cursor_y2;
 extern int			cursor_x;
 extern int			cursor_y;
 
+
 void	swap_screen()
 {
 	uint16_t	buf[VGA_WIDTH * VGA_HEIGHT];
@@ -47,10 +48,62 @@ void	swap_screen()
 	update_cursor(cursor_x, cursor_y);
 }
 
-void	ft_f1()
+void print_tux()
+{
+	/* Black for the body */
+	terminal_setcolor(vga_entry_color(VGA_COLOR_BLACK, VGA_COLOR_BLACK));
+
+	/* White for the background/belly */
+	terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
+	ft_printf("       _nnnn_\n");
+	ft_printf("      dGGGGMMb\n");
+
+	/* Yellow for eyes area */
+	terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_BROWN, VGA_COLOR_BLACK));
+	ft_printf("     @p~qp~~qMb\n");
+	ft_printf("     M|");
+	terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
+	ft_printf("@||@");
+	terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_BROWN, VGA_COLOR_BLACK));
+	ft_printf(") M|\n");
+
+	/* Yellow beak */
+	terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_BROWN, VGA_COLOR_BLACK));
+	ft_printf("     @,----.JM|\n");
+
+	/* White belly */
+	terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
+	ft_printf("    JS^\\__/  qKL\n");
+	ft_printf("   dZP        qKRb\n");
+	ft_printf("  dZP          qKKb\n");
+	ft_printf(" fZP            SMMb\n");
+	ft_printf(" HZM            MMMM\n");
+	ft_printf(" FqM            MMMM\n");
+    
+	/* Feet */
+	terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_BROWN, VGA_COLOR_BLACK));
+	ft_printf("__| \".        |\\dS\"qML\n");
+	ft_printf("|    `.       | `' \\Zq\n");
+	ft_printf("_)      \\.___.,|     .'\n");
+	ft_printf("\\____   )MMMMMP|   .'\n");
+	ft_printf("     `-'       `--'\n");
+
+	/* Reset color */
+	terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK));
+}
+
+
+static void	ft_f1()
 {
 	swap_screen();
 }
+
+static void	ft_f2()
+{
+	print_tux();
+}
+
+
 
 int	pressed = 0;
 
@@ -118,6 +171,11 @@ void keyboard_handler()
 		{
 			ft_f1();
 			pressed = 1;
+		}
+		else if (scancode == 0x3C && pressed == 0)
+		{
+    		ft_f2();
+    		pressed = 1;
 		}
 		else if (character != '\0' && pressed == 0)
 		{

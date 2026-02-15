@@ -13,6 +13,6 @@
 #ifndef FT_KEYBOARD_H
 # define FT_KEYBOARD_H
 
-void keyboard_handler();
+void    keyboard_handler();
 
 #endif
