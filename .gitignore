@@ -1,3 +1,4 @@
 *.o
-
+build/
 .DS_Store
+kfs-2.iso

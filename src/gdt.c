@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   gdt.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tebandam <tebandam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 11:36:38 by tebandam          #+#    #+#             */
-/*   Updated: 2026/02/15 07:54:21 by tebandam         ###   ########.fr       */
+/*   Updated: 2026/02/15 12:36:38 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_io.h"
 #include "ft_terminal.h"
 
-/* 
+/*
 The GDTR register contains two pieces of information:
 limit -> Size of the GDT - 1
 base -> Starting address of the GDT in memory
@@ -21,17 +21,18 @@ base -> Starting address of the GDT in memory
 void print_gdt_address(void)
 {
     unsigned char gdtr[6];
-    
+
     asm("sgdt %0" : "=m"(gdtr));
-    
+
     unsigned int base = *(unsigned int *)(gdtr + 2);
     ft_printf("GDT base: 0x%x\n", base);
+	terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
 }
 
 void print_stack(void)
 {
 	unsigned int *esp;
-	
+
 	 // Copy the address of the top of the stack into esp.
     asm("mov %%esp, %0": "=r"(esp));
 
@@ -43,4 +44,5 @@ void print_stack(void)
 		ft_printf("[%d] [%x]: 0x%x\n",i, &esp[i], (esp[i]));
 	}
     ft_printf("====================\n");
+	terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
 }

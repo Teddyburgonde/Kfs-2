@@ -6,12 +6,14 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:31:21 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/13 18:16:48 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/15 12:44:36 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_io.h"
 #include "ft_libc.h"
+#include "ft_keyboard.h"
+#include "gdt.h"
 
 unsigned char get_scancode()
 {
@@ -79,7 +81,7 @@ void print_tux()
 	ft_printf(" fZP            SMMb\n");
 	ft_printf(" HZM            MMMM\n");
 	ft_printf(" FqM            MMMM\n");
-    
+
 	/* Feet */
 	terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_BROWN, VGA_COLOR_BLACK));
 	ft_printf("__| \".        |\\dS\"qML\n");
@@ -89,7 +91,7 @@ void print_tux()
 	ft_printf("     `-'       `--'\n");
 
 	/* Reset color */
-	terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK));
+	terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
 }
 
 
@@ -98,15 +100,11 @@ static void	ft_f1()
 	swap_screen();
 }
 
-static void	ft_f2()
-{
-	print_tux();
-}
 
-
-static void ft_f3()
+static void ft_shutdown()
 {
-    outw(0x604, 0x2000);
+    outw(0x604, 0x2000); // Qemu shutdown
+	outw(0x4004, 0x3400); // Virtualbox shutdown
 }
 
 
@@ -158,7 +156,44 @@ char scancode_to_char[256] = {
 	[0x0E] = '\b', // Backspace
 };
 
-void keyboard_handler()
+void	print_help()
+{
+	ft_printf("help, shutdown, tux, pstack\n");
+}
+
+void	ft_readline()
+{
+	char	shell_buf[1024] = {0};
+	int		index = 0;
+
+	while (1)
+	{
+		char	key = keyboard_handler();
+		if (key != '\0')
+		{
+			if (key == '\n')
+			{
+				if (!ft_strncmp(sizeof("help"), "help", shell_buf))
+					print_help();
+				else if (!ft_strncmp(sizeof("shutdown"), "shutdown", shell_buf))
+					ft_shutdown();
+				else if (!ft_strncmp(sizeof("tux"), "tux", shell_buf))
+					print_tux();
+				else if (!ft_strncmp(sizeof("pstack"), "pstack", shell_buf))
+					print_stack();
+				ft_printf("CMD: '%s'\n%s", shell_buf, SHELL_PROMPT);
+				ft_memset(shell_buf, 0, sizeof(shell_buf));
+				index = 0;
+			}
+			else if (key == '\b' && index > 0)
+				shell_buf[--index] = '\0';
+			else if (index < 1023)
+				shell_buf[index++] = key;
+		}
+	}
+}
+
+char	keyboard_handler()
 {
 	unsigned char scancode;
 	scancode = get_scancode();
@@ -177,20 +212,17 @@ void keyboard_handler()
 			ft_f1();
 			pressed = 1;
 		}
-		else if (scancode == 0x3C && pressed == 0)
-		{
-    		ft_f2();
-    		pressed = 1;
-		}
 		else if (scancode == 0x3D && pressed == 0)
 		{
-    		ft_f3();
+    		ft_shutdown();
     		pressed = 1;
 		}
 		else if (character != '\0' && pressed == 0)
 		{
 			pressed = 1;
 			ft_printf("%c", character);
+			return (character);
 		}
 	}
+	return ('\0');
 }

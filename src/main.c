@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tebandam <tebandam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:03:04 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/15 07:55:11 by tebandam         ###   ########.fr       */
+/*   Updated: 2026/02/15 12:34:08 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
     ###   ###########    \n\
 \n\
 Welcome to " KFS_VERSION "! " KFS_CREDITS "\n"
-
-# define SHELL_PROMPT ":>"
 
 void	print_header_and_colors()
 {
@@ -60,11 +58,11 @@ void	main(void)
 
 	print_header_and_colors();
 	print_stack();
-	// print_gdt_address();
+	print_gdt_address();
 	terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
 	ft_printf("%s", SHELL_PROMPT);
 	while (1)
 	{
-		keyboard_handler();
+		ft_readline();
 	}
 }

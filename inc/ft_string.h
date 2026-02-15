@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:13:05 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/13 15:07:52 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/15 12:29:37 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		ft_strncmp(size_t n, const char *s1, const char *s2);
 
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
+void	*ft_memset(void *addr, char c, size_t n);
 
 
 #endif

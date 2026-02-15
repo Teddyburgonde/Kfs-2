@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:13:35 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/13 10:28:10 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/15 12:29:32 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 		n--;
 	}
 	return (dest);
+}
+
+void	*ft_memset(void *addr, char c, size_t n)
+{
+	while (n--)
+	{
+		*((uint8_t*)addr++) = c;
+	}
 }
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
