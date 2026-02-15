@@ -35,7 +35,12 @@ void print_stack(void)
 	 // Copy the address of the top of the stack into esp.
     asm("mov %%esp, %0": "=r"(esp));
 
-	for (int i = 0; i < 4; ++i) {
-		ft_printf("0x%x\n", (esp[i]));
+    terminal_setcolor(vga_entry_color(VGA_COLOR_CYAN, VGA_COLOR_BLACK));
+    ft_printf("=== KERNEL STACK ===\n");
+    ft_printf("ESP: 0x%x\n", (esp));
+    ft_printf("--------------------\n");
+	for (int i = 0; i < 8; ++i) {
+		ft_printf("[%d] [%x]: 0x%x\n",i, &esp[i], (esp[i]));
 	}
+    ft_printf("====================\n");
 }

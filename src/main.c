@@ -59,8 +59,8 @@ void	main(void)
 	terminal_clear(screen_2);
 
 	print_header_and_colors();
-	//print_stack();
-	print_gdt_address();
+	print_stack();
+	// print_gdt_address();
 	terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
 	ft_printf("%s", SHELL_PROMPT);
 	while (1)
